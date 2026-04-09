@@ -1,0 +1,304 @@
+ULTRAWORK MODE ENABLED!
+MOTI Agent Team - Final Planning Tree v2
+├── 0. 核心目标
+│   ├── 一个清晰主入口
+│   ├── 一个稳定控制面
+│   ├── 一个严格成本分层
+│   ├── 一个不打扰主线的长期状态层
+│   └── 一个可验证、可回滚、可迭代的 multi-agent team
+│
+├── 1. 顶层原则
+│   ├── 1.1 你平时只面对一个主聊天入口
+│   │   └── Sisyphus
+│   ├── 1.2 specialist 只在需要时被调度
+│   ├── 1.3 OAuth GPT 只做刀刃级工作
+│   ├── 1.4 高频执行交给代理 GPT
+│   ├── 1.5 Kimi 负责监管 / 协调 / 梳理，不负责大量草稿生产
+│   ├── 1.6 MiniMax 负责 utility / breadth / first-pass，不负责主脑判断
+│   └── 1.7 Passive 状态层只写日志，不打扰主线
+│
+├── 2. 团队结构
+│   ├── 2.1 前台主入口层
+│   │   └── Sisyphus
+│   │       ├── 负责日常聊天
+│   │       ├── 负责理解你的意图
+│   │       ├── 负责初步路由
+│   │       ├── 负责整合 specialist 结果
+│   │       └── 负责维持你与整个 team 的交互体验
+│   │
+│   ├── 2.2 协调 / 监管层
+│   │   ├── Kimi-backed Sisyphus / Metis
+│   │   │   ├── 长上下文梳理
+│   │   │   ├── 计划补漏
+│   │   │   ├── 任务监管
+│   │   │   ├── 上下文压缩
+│   │   │   └── 轻量 steering
+│   │   └── 不负责
+│   │       ├── 大量 coding 初稿
+│   │       ├── 高频 OpenSpec 粗稿
+│   │       └── 主力执行
+│   │
+│   ├── 2.3 高频执行层
+│   │   └── Hephaestus
+│   │       ├── 主力模型：代理 GPT-5.3-codex
+│   │       ├── 升级模型：代理 GPT-5.4
+│   │       ├── 负责多文件执行
+│   │       ├── 负责高频 coding 初稿
+│   │       ├── 负责 bounded drafting
+│   │       └── 负责长时间独立深执行
+│   │
+│   ├── 2.4 搜索 / 检索层
+│   │   ├── Explore
+│   │   │   ├── 本地代码搜索
+│   │   │   ├── pattern discovery
+│   │   │   └── repository structure lookup
+│   │   └── Librarian
+│   │       ├── 外部文档搜索
+│   │       ├── OSS 示例
+│   │       └── API / 兼容性检索
+│   │
+│   ├── 2.5 判断 / 审查层
+│   │   ├── Oracle
+│   │   │   ├── 架构判断
+│   │   │   ├── 复杂 debug second opinion
+│   │   │   └── 关键决策
+│   │   ├── Momus
+│   │   │   ├── 计划审查
+│   │   │   ├── 闭环审查
+│   │   │   └── 完成度审查
+│   │   └── OAuth GPT-5.4
+│   │       ├── 作为高价值判断内核
+│   │       └── 不参与低价值批量生产
+│   │
+│   └── 2.6 Passive Long-Horizon Status Layer
+│       ├── window-observer
+│       ├── status-synthesizer
+│       ├── handoff-gate
+│       └── status-responder
+│
+├── 3. 模型分层
+│   ├── 3.1 日常高质量主聊层
+│   │   └── 代理 GPT-5.4
+│   │       ├── 用于 Sisyphus 主聊天
+│   │       ├── 用于高质量协调
+│   │       └── 用于稍微有思考要求的日常交互
+│   │
+│   ├── 3.2 协调监管层
+│   │   └── Kimi
+│   │       ├── 长上下文梳理
+│   │       ├── 任务监管
+│   │       ├── 计划补漏
+│   │       ├── 轻量总结
+│   │       └── 不承担大量生产草稿
+│   │
+│   ├── 3.3 utility / breadth 层
+│   │   └── MiniMax
+│   │       ├── first-pass classification
+│   │       ├── 候选生成
+│   │       ├── 快速 utility tasks
+│   │       ├── 搜索 / breadth work
+│   │       └── 不作为主协调脑
+│   │
+│   ├── 3.4 高频执行层
+│   │   ├── 主力：代理 GPT-5.3-codex
+│   │   └── 升级：代理 GPT-5.4
+│   │
+│   └── 3.5 刀刃层
+│       └── OAuth GPT-5.4
+│           ├── 分析
+│           ├── diff 审阅
+│           ├── 最终复核
+│           ├── 架构裁决
+│           └── 绝不浪费在批量草稿和大量 coding 上
+│
+├── 4. Agent × Model 对应
+│   ├── Sisyphus
+│   │   ├── 默认：代理 GPT-5.4
+│   │   └── 辅助档：Kimi
+│   │
+│   ├── Metis
+│   │   ├── 默认：Kimi
+│   │   └── 升级：代理 GPT-5.4
+│   │
+│   ├── Hephaestus
+│   │   ├── 默认：代理 GPT-5.3-codex
+│   │   └── 升级：代理 GPT-5.4
+│   │
+│   ├── Explore
+│   │   └── 默认：MiniMax
+│   │
+│   ├── Librarian
+│   │   └── 默认：MiniMax
+│   │
+│   ├── Oracle
+│   │   └── 默认：OAuth GPT-5.4
+│   │
+│   └── Momus
+│       └── 默认：OAuth GPT-5.4
+│
+├── 5. 任务路由逻辑
+│   ├── 5.1 日常聊天
+│   │   └── Sisyphus + 代理 GPT-5.4
+│   │
+│   ├── 5.2 长上下文梳理 / 任务监管 / 轻总结
+│   │   └── Kimi
+│   │
+│   ├── 5.3 utility / breadth / first-pass classification
+│   │   └── MiniMax
+│   │
+│   ├── 5.4 大量 coding 初稿 / bounded drafting
+│   │   └── Hephaestus + 代理 GPT-5.3-codex
+│   │
+│   ├── 5.5 更复杂的高频执行
+│   │   └── Hephaestus + 代理 GPT-5.4
+│   │
+│   ├── 5.6 相对完备初稿的分析 / diff / review
+│   │   └── OAuth GPT-5.4
+│   │
+│   └── 5.7 最终高风险决策
+│       └── Oracle / Momus + OAuth GPT-5.4
+│
+├── 6. 草稿层重构后的理解
+│   ├── 6.1 轻草稿
+│   │   └── MiniMax
+│   │
+│   ├── 6.2 可用型执行草稿
+│   │   └── 代理 GPT-5.3-codex
+│   │
+│   ├── 6.3 协调梳理型草稿
+│   │   └── Kimi
+│   │
+│   └── 6.4 高价值精修
+│       └── OAuth GPT-5.4
+│
+├── 7. Passive Long-Horizon Status Layer
+│   ├── 7.1 目的
+│   │   ├── 长期状态可见
+│   │   ├── 风险趋势沉淀
+│   │   ├── handoff 备份准备
+│   │   └── 不打扰主线
+│   │
+│   ├── 7.2 工作方式
+│   │   ├── 按时间窗运行
+│   │   ├── 只读 evidence
+│   │   ├── 不主动插话
+│   │   ├── 不主动调 specialist
+│   │   └── 只写入 Markdown 日志
+│   │
+│   ├── 7.3 输出位置
+│   │   └── hidden markdown status log
+│   │       ├── daily summary
+│   │       ├── weekly summary
+│   │       ├── unresolved issues
+│   │       ├── risk trend
+│   │       └── possible handoff candidates
+│   │
+│   ├── 7.4 默认产物
+│   │   ├── no meaningful change
+│   │   ├── insufficient evidence
+│   │   ├── state snapshot
+│   │   └── bounded handoff candidate
+│   │
+│   └── 7.5 禁止事项
+│       ├── 不变成 orchestrator
+│       ├── 不抢 specialist ownership
+│       ├── 不污染主对话
+│       └── 不频繁提醒你
+│
+├── 8. Git / DevOps 迭代层
+│   ├── 8.1 引入 git-master skill
+│   │   ├── 原子提交
+│   │   ├── rebase / squash
+│   │   ├── history lookup
+│   │   └── 迭代清理
+│   │
+│   ├── 8.2 位置
+│   │   └── 作为执行完成后的 git discipline layer
+│   │
+│   └── 8.3 不负责
+│       ├── 主规划
+│       ├── 主路由
+│       └── 主判断
+│
+├── 9. 验证体系
+│   ├── 9.1 团队整体
+│   │   ├── route accuracy
+│   │   ├── rework rate
+│   │   ├── specialist success rate
+│   │   ├── review hit rate
+│   │   └── token efficiency by tier
+│   │
+│   ├── 9.2 OAuth GPT 使用纪律
+│   │   ├── 不得进入草稿批量层
+│   │   ├── 不得进入大规模 coding 批处理
+│   │   ├── 必须主要用于分析 / diff / review / 裁决
+│   │   └── 每次使用都应当是高价值调用
+│   │
+│   ├── 9.3 Passive 状态层
+│   │   ├── summary_freshness
+│   │   ├── material_delta_precision
+│   │   ├── duplicate_handoff_rate
+│   │   ├── specialist_interference_rate
+│   │   └── operator_scan_time
+│   │
+│   └── 9.4 模型适配验证
+│       ├── Kimi 是否更适合监管协调
+│       ├── MiniMax 是否足够承担 utility/breadth
+│       ├── 代理 5.3 是否足够撑高频执行
+│       ├── 代理 5.4 是否适合作为主聊高档
+│       └── OAuth GPT 是否真正只用于刀刃
+│
+├── 10. 迭代策略
+│   ├── Phase 0
+│   │   └── 完成 OpenSpec 规划
+│   ├── Phase 1
+│   │   ├── 固定主入口：Sisyphus + 代理 5.4
+│   │   ├── 固定 Kimi 为协调监管层
+│   │   └── 固定 MiniMax 为 utility/breadth 层
+│   ├── Phase 2
+│   │   ├── 固定 Hephaestus + 代理 5.3 为高频执行主力
+│   │   └── 固定 OAuth GPT 为裁决层
+│   ├── Phase 3
+│   │   ├── 引入 git-master 作为 Git 纪律层
+│   │   └── 收紧触发规则
+│   ├── Phase 4
+│   │   ├── 引入 passive markdown log 层
+│   │   └── 先 shadow mode 运行
+│   └── Phase 5
+│       ├── 看指标做调优
+│       ├── 调整阈值
+│       ├── 调整路由
+│       └── 必要时回滚
+│
+├── 11. 风险与边界
+│   ├── 11.1 Kimi 下沉过度
+│   │   └── 会浪费其协调优势
+│   ├── 11.2 MiniMax 上浮过高
+│   │   └── 会破坏主脑质量
+│   ├── 11.3 代理 5.3 不够稳
+│   │   └── 升到代理 5.4
+│   ├── 11.4 OAuth GPT 被滥用
+│   │   └── 必须加纪律约束
+│   ├── 11.5 passive log 层变成主流程干扰源
+│   │   └── 保持 hidden markdown-only output
+│   └── 11.6 git discipline 缺失
+│       └── 用 git-master 补上
+│
+└── 12. 最终推荐落地版
+    ├── 主聊天
+    │   └── Sisyphus + 代理 GPT-5.4
+    ├── 协调监管
+    │   └── Kimi
+    ├── utility / breadth
+    │   └── MiniMax
+    ├── 高频执行
+    │   └── Hephaestus + 代理 GPT-5.3-codex
+    ├── 高频执行升级
+    │   └── Hephaestus + 代理 GPT-5.4
+    ├── 分析 / diff / review / 裁决
+    │   └── OAuth GPT-5.4
+    ├── Git 纪律层
+    │   └── git-master
+    └── 长期状态沉淀
+        └── hidden Passive Markdown Status Log
+如果你愿意，下一步我就把这个 v2 tree 正式翻译成一份 OpenSpec change 规划结构。
