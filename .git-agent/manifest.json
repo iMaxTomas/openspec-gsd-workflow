@@ -1,6 +1,6 @@
 {
   "project": "opencode-lab",
-  "currentIteration": "1-context-monitor",
+  "currentIteration": "2-validation-gates",
   "iterations": [
     {
       "id": "1-context-monitor",
@@ -22,14 +22,32 @@
         }
       ],
       "blockers": []
+    },
+    {
+      "id": "2-validation-gates",
+      "branch": "iteration/2-validation-gates",
+      "goal": "实现 Planning Audit Gate 和三层验证门",
+      "status": "in-progress",
+      "startedAt": "2026-04-10T18:07:45.286Z",
+      "commits": [],
+      "reviews": [
+        {
+          "timestamp": "2026-04-10T18:17:16.682Z",
+          "status": "issues-found",
+          "issues": [
+            "${issues[@]}"
+          ]
+        }
+      ],
+      "blockers": []
     }
   ],
   "completedPhases": [],
   "pendingReviews": [],
   "metrics": {
     "totalCommits": 0,
-    "totalReviews": 2,
-    "issuesFound": 0,
+    "totalReviews": 3,
+    "issuesFound": 1,
     "issuesFixed": 0
   }
 }
