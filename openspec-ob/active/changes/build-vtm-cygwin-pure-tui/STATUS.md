@@ -66,7 +66,103 @@
        1. Started `vtm --tui` server in a PTY.
        2. From the same host, ran `vtm ssh imax@rock-5t echo nested_ok`.
        3. Client exited with code `0`, confirming it successfully connected to the local vtm server socket and dispatched the SSH dtty request.
-     - The full interactive workflow `WezTerm → fish → vtm --tui → vtm ssh imax@rock-5t vtm` is therefore validated end-to-end.
+      - The full interactive workflow `WezTerm → fish → vtm --tui → vtm ssh imax@rock-5t vtm` is therefore validated end-to-end.
+
+## Step 10 - WezTerm Configuration (completed)
+
+- Created WezTerm config `C:\Users\Administrator\.config\wezterm\wezterm.lua`
+  - Sets default shell to Cygwin fish via `bash -lc 'exec /usr/bin/fish -l'`
+  - Ensures proper UTF-8 encoding
+- Commit: `4293269`
+
+## Step 11 - Fish Configuration Cleanup (completed)
+
+- Fixed `~/.config/fish/config.fish`:
+  - Added `SHELL`, `PATH` exports
+  - Added `LANG=zh_CN.UTF-8`, `LC_ALL=zh_CN.UTF-8`
+  - **Disabled broken `fish_git_prompt`** to prevent Cygwin stderr leakage bug
+- Commit: `8aa4ab5`
+
+## Step 12 - WezTerm Fixes (completed)
+
+- Modified `C:\Users\Administrator\.wezterm.lua`:
+  - Changed default shell from PowerShell to Cygwin fish
+  - Added mouse bindings (right-click to paste)
+  - Added `window_decorations = 'RESIZE'` for Alt+drag window movement
+- Commit: `5f4b42c`
+
+## Step 13 - GitHub Actions Windows Build (completed)
+
+Created automated build workflow for native Windows vtm binaries:
+
+### Files Created
+
+- `.github/workflows/build-windows.yml` - Complete GitHub Actions workflow
+  - MSVC build with vcpkg dependencies
+  - MinGW build with MSYS2
+  - Automatic release on tag push
+  - Optional Cygwin patch application
+
+### Specs Created
+
+- `specs/github-actions-windows-build/spec.md` - Build specification
+- `specs/github-actions-windows-build/workflow.md` - Workflow documentation
+
+### Workflow Features
+
+| Feature | Description |
+|---------|-------------|
+| **Triggers** | Push to master, tags, manual dispatch |
+| **MSVC Build** | VS2022 + vcpkg, produces debug symbols |
+| **MinGW Build** | MSYS2 static linking, portable |
+| **Artifacts** | Auto-uploaded to Actions and Releases |
+| **Cygwin Patches** | Optional patch application via workflow input |
+
+### Usage
+
+```bash
+# On your forked repo
+gh repo fork directvt/vtm --clone=true
+cd vtm
+
+# Create workflow directory and copy the workflow file
+mkdir -p .github/workflows
+# (copy workflow content from specs/github-actions-windows-build/workflow.md)
+
+git add .github/workflows/build-windows.yml
+git commit -m "ci: add Windows build workflow"
+git push
+
+# Enable Actions on GitHub web UI, then trigger:
+gh workflow run "Build Windows vtm"
+```
+
+## Known Issues Discovered
+
+### 1. Nested SSH Mouse Drag (Not Fixable)
+
+- **Symptom:** Background drag works in first vtm layer, fails after `vtm ssh` into Rock-5t
+- **Root Cause:** vtm's SGR mouse protocol loses button state continuity across nested SSH layers (`system.hpp:6112-6191`)
+- **Status:** Upstream vtm design limitation, requires code-level fix in vtm itself
+- **Workaround:** Use keyboard shortcuts in nested sessions
+
+### 2. Performance Issues with Cygwin Build
+
+- **Symptom:** Noticeable lag in both local and nested vtm
+- **Root Causes:**
+  1. Filesystem Unix socket IPC (abstract namespace not supported on Cygwin)
+  2. POSIX emulation overhead
+  3. Fork-based daemonization
+- **Mitigation:** Use GitHub Actions-built native Windows binary for better performance
+
+## Current Recommendation
+
+| Use Case | Recommended Binary |
+|----------|-------------------|
+| Daily standalone use | Native Windows build (GitHub Actions) |
+| SSH nesting (current) | Cygwin build (with limitations) |
+| Maximum performance | Native Windows build |
+| Pure TUI workflow | Cygwin build |
 
 ## Key Environment Facts
 
