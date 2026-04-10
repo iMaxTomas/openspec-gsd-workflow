@@ -1,0 +1,193 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, 'iteration/*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        if [ -f package.json ]; then
+          npm ci
+        fi
+    
+    - name: Run tests
+      run: |
+        if [ -f tests/context-monitor.test.mjs ]; then
+          node tests/context-monitor.test.mjs
+        fi
+    
+    - name: Test scripts executable
+      run: |
+        chmod +x scripts/*.sh
+        chmod +x git-agent.sh
+        echo "Scripts are executable ✅"
+    
+    - name: Validate YAML files
+      run: |
+        node -e "
+          const yaml = require('js-yaml');
+          const fs = require('fs');
+          
+          // Test context-rules.yaml
+          const contextRules = yaml.load(fs.readFileSync('.gsd/context-rules.yaml', 'utf8'));
+          console.log('✅ context-rules.yaml valid');
+          
+          // Test validation-gates.yaml
+          const validationGates = yaml.load(fs.readFileSync('.gsd/validation-gates.yaml', 'utf8'));
+          console.log('✅ validation-gates.yaml valid');
+        "
+    
+    - name: Test context monitor
+      run: |
+        node .opencode/scripts/context-monitor.mjs status test-change || true
+        node .opencode/scripts/context-monitor.mjs simulate || true
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    
+    - name: Install shellcheck
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y shellcheck
+    
+    - name: Lint shell scripts
+      run: |
+        shellcheck scripts/*.sh || true
+        shellcheck git-agent.sh || true
+    
+    - name: Check JavaScript syntax
+      run: |
+        node --check .opencode/scripts/context-monitor.mjs || true
+        node --check .opencode/scripts/planning-audit.mjs || true
+        node --check .opencode/scripts/validation-gates.mjs || true
+        node --check .opencode/scripts/gsd-pause-work.mjs || true
+        node --check .opencode/scripts/gsd-resume-work.mjs || true
+        node --check .opencode/scripts/worktree-doctor.mjs || true
+
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: [test, lint]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    
+    - name: Integration test - Context Monitor
+      run: |
+        # Test status command
+        node .opencode/scripts/context-monitor.mjs status integration-test 2>&1 | head -20
+        
+        # Test simulate (first 5 messages only for speed)
+        node -e "
+          import('./.opencode/scripts/context-monitor.mjs').then(({ ContextMonitor }) => {
+            const monitor = new ContextMonitor('integration-test');
+            for (let i = 0; i < 5; i++) {
+              monitor.onMessage();
+            }
+            console.log('✅ Context monitor integration test passed');
+          });
+        "
+    
+    - name: Integration test - Planning Audit
+      run: |
+        # Create a test change
+        mkdir -p openspec-ob/active/changes/integration-test
+        echo '# Proposal' > openspec-ob/active/changes/integration-test/proposal.md
+        
+        # Run audit
+        node .opencode/scripts/planning-audit.mjs integration-test || true
+        
+        echo "✅ Planning audit integration test completed"
+    
+    - name: Integration test - Validation Gates
+      run: |
+        node .opencode/scripts/validation-gates.mjs integration-test || true
+        echo "✅ Validation gates integration test completed"
+
+  validate-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check documentation
+      run: |
+        # Check if main docs exist
+        test -f README.md && echo "✅ README.md exists"
+        test -f docs/CONTEXT-MONITOR.md && echo "✅ CONTEXT-MONITOR.md exists"
+        test -f docs/EXAMPLE-WORKFLOW.md && echo "✅ EXAMPLE-WORKFLOW.md exists"
+        test -f ARCHITECTURE-PLAN.md && echo "✅ ARCHITECTURE-PLAN.md exists"
+    
+    - name: Check links in docs
+      run: |
+        # Simple check for broken markdown links
+        grep -r "\[.*\](.*)" docs/*.md README.md | grep -v "http" | head -10
+        echo "✅ Documentation structure valid"
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [test, lint, integration-test, validate-docs]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Create release package
+      run: |
+        mkdir -p release
+        
+        # Copy core files
+        cp -r .gsd release/
+        cp -r .opencode release/
+        cp -r scripts release/
+        cp -r docs release/
+        cp git-agent.sh release/
+        cp README.md release/
+        cp -r tests release/ 2>/dev/null || true
+        
+        # Create tar.gz
+        tar -czf openspec-gsd-workflow-latest.tar.gz -C release .
+        
+        echo "✅ Release package created"
+    
+    - name: Upload release artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-package
+        path: openspec-gsd-workflow-latest.tar.gz

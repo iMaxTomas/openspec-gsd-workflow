@@ -1,0 +1,41 @@
+{
+  "name": "openspec-gsd-workflow",
+  "version": "0.2.0",
+  "description": "AI-assisted development workflow with automatic context management, spec-driven development, and git worktree isolation",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/context-monitor.test.mjs",
+    "test:integration": "node tests/integration.test.mjs",
+    "lint": "shellcheck scripts/*.sh git-agent.sh",
+    "validate": "node scripts/validate-config.mjs",
+    "setup": "node scripts/setup.mjs"
+  },
+  "keywords": [
+    "ai-assisted-development",
+    "spec-driven-development",
+    "context-management",
+    "git-worktree",
+    "openspec",
+    "gsd",
+    "claude-code",
+    "workflow"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iMaxTomas/openspec-gsd-workflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iMaxTomas/openspec-gsd-workflow/issues"
+  },
+  "homepage": "https://github.com/iMaxTomas/openspec-gsd-workflow#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {}
+}
