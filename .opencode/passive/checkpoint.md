@@ -1,6 +1,6 @@
 # checkpoint
 
-Compact resumable checkpoint surface for the local OpenCode multiagent slice-one team.
+Compact resumable checkpoint surface for the local OpenCode multiagent slice runtime.
 
 ## Fields
 
@@ -13,10 +13,10 @@ Compact resumable checkpoint surface for the local OpenCode multiagent slice-one
 
 ## Current Checkpoint
 
-- timestamp: 2026-04-10T01:34:07.606Z
-- current_boundary: slice one only; no hidden subagents; no unresolved-item or handoff-candidate outputs
+- timestamp: 2026-04-10T03:15:49.333Z
+- current_boundary: slice two only; keep one front-door owner; visible retained lanes only; no hidden internal subagents
 - active_owner: front-door-owner
 - active_or_last_lane: review-lane
-- current_status: live routing completed through review-lane with front-door-owner closure
+- current_status: live routing completed through review-lane with front-door-owner closure; handoff-candidate recorded
 - open_questions:
-  - whether execution-lane and review-lane live runs should be added as dedicated acceptance probes beyond the first routed slice
+  - whether hidden internal subagents should remain deferred after the slice-two promotion pipeline is validated
