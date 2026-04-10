@@ -30,7 +30,15 @@
       "status": "in-progress",
       "startedAt": "2026-04-10T18:07:45.286Z",
       "commits": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "timestamp": "2026-04-10T18:17:16.682Z",
+          "status": "issues-found",
+          "issues": [
+            "${issues[@]}"
+          ]
+        }
+      ],
       "blockers": []
     }
   ],
@@ -38,8 +46,8 @@
   "pendingReviews": [],
   "metrics": {
     "totalCommits": 0,
-    "totalReviews": 2,
-    "issuesFound": 0,
+    "totalReviews": 3,
+    "issuesFound": 1,
     "issuesFixed": 0
   }
 }
