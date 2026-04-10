@@ -1,7 +1,18 @@
 {
   "project": "opencode-lab",
-  "currentIteration": null,
-  "iterations": [],
+  "currentIteration": "1-context-monitor",
+  "iterations": [
+    {
+      "id": "1-context-monitor",
+      "branch": "iteration/1-context-monitor",
+      "goal": "实现消息轮数监控和自动 worktree 切换",
+      "status": "in-progress",
+      "startedAt": "2026-04-10T17:48:08.474Z",
+      "commits": [],
+      "reviews": [],
+      "blockers": []
+    }
+  ],
   "completedPhases": [],
   "pendingReviews": [],
   "metrics": {
