@@ -1,6 +1,6 @@
 {
   "project": "opencode-lab",
-  "currentIteration": "3",
+  "currentIteration": "4-ci-cd-integration",
   "iterations": [
     {
       "id": "1-context-monitor",
@@ -47,6 +47,16 @@
       "goal": "Implement /gsd-pause-work and /gsd-resume-work commands, add worktree health checks, and CI/CD integration",
       "status": "in-progress",
       "startedAt": "2026-04-10T18:29:26.878Z",
+      "commits": [],
+      "reviews": [],
+      "blockers": []
+    },
+    {
+      "id": "4-ci-cd-integration",
+      "branch": "iteration/4-ci-cd-integration",
+      "goal": "实现 CI/CD 集成、自动化测试工作流和安装脚本",
+      "status": "in-progress",
+      "startedAt": "2026-04-10T18:38:09.186Z",
       "commits": [],
       "reviews": [],
       "blockers": []
