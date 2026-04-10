@@ -32,3 +32,14 @@
   - `.opencode/agents/`
   - passive logging/checkpoint plugin wiring
 - Keeps the broader v3 planning line intact while proving one bounded local landing path.
+
+## Implementation status
+
+- Slice-one runtime surface now includes a minimal local runner at `.opencode/scripts/slice-one-runner.mjs` to exercise the frozen hard-gate matrix without widening topology.
+- Passive `state-log` and `checkpoint` outputs are now written automatically during shadow/live validation runs instead of remaining hand-maintained only.
+- Validation evidence exists for:
+  - one shadow non-interference run
+  - one live research-lane run
+  - one live execution-lane run
+  - one live review-lane run
+- In all live validations, `front-door-owner` remained the only operator-visible closure point.
