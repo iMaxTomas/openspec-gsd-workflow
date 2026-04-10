@@ -1,0 +1,15 @@
+- [ ] Inspect and document current Cygwin installation on 172.29.111.218 (version, root path, existing packages).
+- [ ] Heal environment hygiene: remove the broken x-cmd startup line from `~/.bashrc` to eliminate startup errors.
+- [ ] Fix Windows console encoding: set CMD and PowerShell to UTF-8 so that Chinese output and build logs render correctly over SSH.
+- [ ] Unify SSH configuration: symlink `config`, `id_ed25519`, `id_ed25519.pub` from `C:\Users\Administrator\.ssh\` into `/home/Administrator/.ssh/` and tighten Windows-side private-key ACLs.
+- [ ] Identify and list missing build dependencies required to compile vtm from source under Cygwin.
+- [ ] Install missing Cygwin packages (cmake, gcc-g++, make, git, libfreetype-devel, libharfbuzz-devel, liblua5.4-devel or equivalents).
+- [ ] Clone vtm repository inside Cygwin environment.
+- [ ] Configure vtm build with CMake using Cygwin toolchain.
+- [ ] Compile vtm binary successfully inside Cygwin.
+- [ ] Install Cygwin-built vtm to `/usr/local/bin`.
+- [ ] Add a convenience launcher (e.g., `vtc` alias or fish function) that starts the Cygwin-built vtm with `--tui`.
+- [ ] Ensure vtm default shell is fish by setting `SHELL` or configuring the vtm terminal app to spawn `/usr/bin/fish -l`.
+- [ ] Validate that `vtm --tui` inside a Cygwin terminal launches a nested TUI desktop without popping a native GUI window.
+- [ ] Validate that `vtm ssh imax@rock-5t vtm` from inside Cygwin `vtm --tui` renders the remote desktop inline inside the same terminal surface.
+- [ ] Document any keyboard, font, or color caveats when running vtm under Cygwin compared to the Windows-native build.

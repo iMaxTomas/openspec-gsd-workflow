@@ -1,0 +1,13 @@
+{
+  "project": "opencode-lab",
+  "currentIteration": null,
+  "iterations": [],
+  "completedPhases": [],
+  "pendingReviews": [],
+  "metrics": {
+    "totalCommits": 0,
+    "totalReviews": 0,
+    "issuesFound": 0,
+    "issuesFixed": 0
+  }
+}

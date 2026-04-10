@@ -1,304 +1,334 @@
-ULTRAWORK MODE ENABLED!
-MOTI Agent Team - Final Planning Tree v2
-├── 0. 核心目标
-│   ├── 一个清晰主入口
-│   ├── 一个稳定控制面
-│   ├── 一个严格成本分层
-│   ├── 一个不打扰主线的长期状态层
-│   └── 一个可验证、可回滚、可迭代的 multi-agent team
-│
-├── 1. 顶层原则
-│   ├── 1.1 你平时只面对一个主聊天入口
-│   │   └── Sisyphus
-│   ├── 1.2 specialist 只在需要时被调度
-│   ├── 1.3 OAuth GPT 只做刀刃级工作
-│   ├── 1.4 高频执行交给代理 GPT
-│   ├── 1.5 Kimi 负责监管 / 协调 / 梳理，不负责大量草稿生产
-│   ├── 1.6 MiniMax 负责 utility / breadth / first-pass，不负责主脑判断
-│   └── 1.7 Passive 状态层只写日志，不打扰主线
-│
-├── 2. 团队结构
-│   ├── 2.1 前台主入口层
-│   │   └── Sisyphus
-│   │       ├── 负责日常聊天
-│   │       ├── 负责理解你的意图
-│   │       ├── 负责初步路由
-│   │       ├── 负责整合 specialist 结果
-│   │       └── 负责维持你与整个 team 的交互体验
-│   │
-│   ├── 2.2 协调 / 监管层
-│   │   ├── Kimi-backed Sisyphus / Metis
-│   │   │   ├── 长上下文梳理
-│   │   │   ├── 计划补漏
-│   │   │   ├── 任务监管
-│   │   │   ├── 上下文压缩
-│   │   │   └── 轻量 steering
-│   │   └── 不负责
-│   │       ├── 大量 coding 初稿
-│   │       ├── 高频 OpenSpec 粗稿
-│   │       └── 主力执行
-│   │
-│   ├── 2.3 高频执行层
-│   │   └── Hephaestus
-│   │       ├── 主力模型：代理 GPT-5.3-codex
-│   │       ├── 升级模型：代理 GPT-5.4
-│   │       ├── 负责多文件执行
-│   │       ├── 负责高频 coding 初稿
-│   │       ├── 负责 bounded drafting
-│   │       └── 负责长时间独立深执行
-│   │
-│   ├── 2.4 搜索 / 检索层
-│   │   ├── Explore
-│   │   │   ├── 本地代码搜索
-│   │   │   ├── pattern discovery
-│   │   │   └── repository structure lookup
-│   │   └── Librarian
-│   │       ├── 外部文档搜索
-│   │       ├── OSS 示例
-│   │       └── API / 兼容性检索
-│   │
-│   ├── 2.5 判断 / 审查层
-│   │   ├── Oracle
-│   │   │   ├── 架构判断
-│   │   │   ├── 复杂 debug second opinion
-│   │   │   └── 关键决策
-│   │   ├── Momus
-│   │   │   ├── 计划审查
-│   │   │   ├── 闭环审查
-│   │   │   └── 完成度审查
-│   │   └── OAuth GPT-5.4
-│   │       ├── 作为高价值判断内核
-│   │       └── 不参与低价值批量生产
-│   │
-│   └── 2.6 Passive Long-Horizon Status Layer
-│       ├── window-observer
-│       ├── status-synthesizer
-│       ├── handoff-gate
-│       └── status-responder
-│
-├── 3. 模型分层
-│   ├── 3.1 日常高质量主聊层
-│   │   └── 代理 GPT-5.4
-│   │       ├── 用于 Sisyphus 主聊天
-│   │       ├── 用于高质量协调
-│   │       └── 用于稍微有思考要求的日常交互
-│   │
-│   ├── 3.2 协调监管层
-│   │   └── Kimi
-│   │       ├── 长上下文梳理
-│   │       ├── 任务监管
-│   │       ├── 计划补漏
-│   │       ├── 轻量总结
-│   │       └── 不承担大量生产草稿
-│   │
-│   ├── 3.3 utility / breadth 层
-│   │   └── MiniMax
-│   │       ├── first-pass classification
-│   │       ├── 候选生成
-│   │       ├── 快速 utility tasks
-│   │       ├── 搜索 / breadth work
-│   │       └── 不作为主协调脑
-│   │
-│   ├── 3.4 高频执行层
-│   │   ├── 主力：代理 GPT-5.3-codex
-│   │   └── 升级：代理 GPT-5.4
-│   │
-│   └── 3.5 刀刃层
-│       └── OAuth GPT-5.4
-│           ├── 分析
-│           ├── diff 审阅
-│           ├── 最终复核
-│           ├── 架构裁决
-│           └── 绝不浪费在批量草稿和大量 coding 上
-│
-├── 4. Agent × Model 对应
-│   ├── Sisyphus
-│   │   ├── 默认：代理 GPT-5.4
-│   │   └── 辅助档：Kimi
-│   │
-│   ├── Metis
-│   │   ├── 默认：Kimi
-│   │   └── 升级：代理 GPT-5.4
-│   │
-│   ├── Hephaestus
-│   │   ├── 默认：代理 GPT-5.3-codex
-│   │   └── 升级：代理 GPT-5.4
-│   │
-│   ├── Explore
-│   │   └── 默认：MiniMax
-│   │
-│   ├── Librarian
-│   │   └── 默认：MiniMax
-│   │
-│   ├── Oracle
-│   │   └── 默认：OAuth GPT-5.4
-│   │
-│   └── Momus
-│       └── 默认：OAuth GPT-5.4
-│
-├── 5. 任务路由逻辑
-│   ├── 5.1 日常聊天
-│   │   └── Sisyphus + 代理 GPT-5.4
-│   │
-│   ├── 5.2 长上下文梳理 / 任务监管 / 轻总结
-│   │   └── Kimi
-│   │
-│   ├── 5.3 utility / breadth / first-pass classification
-│   │   └── MiniMax
-│   │
-│   ├── 5.4 大量 coding 初稿 / bounded drafting
-│   │   └── Hephaestus + 代理 GPT-5.3-codex
-│   │
-│   ├── 5.5 更复杂的高频执行
-│   │   └── Hephaestus + 代理 GPT-5.4
-│   │
-│   ├── 5.6 相对完备初稿的分析 / diff / review
-│   │   └── OAuth GPT-5.4
-│   │
-│   └── 5.7 最终高风险决策
-│       └── Oracle / Momus + OAuth GPT-5.4
-│
-├── 6. 草稿层重构后的理解
-│   ├── 6.1 轻草稿
-│   │   └── MiniMax
-│   │
-│   ├── 6.2 可用型执行草稿
-│   │   └── 代理 GPT-5.3-codex
-│   │
-│   ├── 6.3 协调梳理型草稿
-│   │   └── Kimi
-│   │
-│   └── 6.4 高价值精修
-│       └── OAuth GPT-5.4
-│
-├── 7. Passive Long-Horizon Status Layer
-│   ├── 7.1 目的
-│   │   ├── 长期状态可见
-│   │   ├── 风险趋势沉淀
-│   │   ├── handoff 备份准备
-│   │   └── 不打扰主线
-│   │
-│   ├── 7.2 工作方式
-│   │   ├── 按时间窗运行
-│   │   ├── 只读 evidence
-│   │   ├── 不主动插话
-│   │   ├── 不主动调 specialist
-│   │   └── 只写入 Markdown 日志
-│   │
-│   ├── 7.3 输出位置
-│   │   └── hidden markdown status log
-│   │       ├── daily summary
-│   │       ├── weekly summary
-│   │       ├── unresolved issues
-│   │       ├── risk trend
-│   │       └── possible handoff candidates
-│   │
-│   ├── 7.4 默认产物
-│   │   ├── no meaningful change
-│   │   ├── insufficient evidence
-│   │   ├── state snapshot
-│   │   └── bounded handoff candidate
-│   │
-│   └── 7.5 禁止事项
-│       ├── 不变成 orchestrator
-│       ├── 不抢 specialist ownership
-│       ├── 不污染主对话
-│       └── 不频繁提醒你
-│
-├── 8. Git / DevOps 迭代层
-│   ├── 8.1 引入 git-master skill
-│   │   ├── 原子提交
-│   │   ├── rebase / squash
-│   │   ├── history lookup
-│   │   └── 迭代清理
-│   │
-│   ├── 8.2 位置
-│   │   └── 作为执行完成后的 git discipline layer
-│   │
-│   └── 8.3 不负责
-│       ├── 主规划
-│       ├── 主路由
-│       └── 主判断
-│
-├── 9. 验证体系
-│   ├── 9.1 团队整体
-│   │   ├── route accuracy
-│   │   ├── rework rate
-│   │   ├── specialist success rate
-│   │   ├── review hit rate
-│   │   └── token efficiency by tier
-│   │
-│   ├── 9.2 OAuth GPT 使用纪律
-│   │   ├── 不得进入草稿批量层
-│   │   ├── 不得进入大规模 coding 批处理
-│   │   ├── 必须主要用于分析 / diff / review / 裁决
-│   │   └── 每次使用都应当是高价值调用
-│   │
-│   ├── 9.3 Passive 状态层
-│   │   ├── summary_freshness
-│   │   ├── material_delta_precision
-│   │   ├── duplicate_handoff_rate
-│   │   ├── specialist_interference_rate
-│   │   └── operator_scan_time
-│   │
-│   └── 9.4 模型适配验证
-│       ├── Kimi 是否更适合监管协调
-│       ├── MiniMax 是否足够承担 utility/breadth
-│       ├── 代理 5.3 是否足够撑高频执行
-│       ├── 代理 5.4 是否适合作为主聊高档
-│       └── OAuth GPT 是否真正只用于刀刃
-│
-├── 10. 迭代策略
-│   ├── Phase 0
-│   │   └── 完成 OpenSpec 规划
-│   ├── Phase 1
-│   │   ├── 固定主入口：Sisyphus + 代理 5.4
-│   │   ├── 固定 Kimi 为协调监管层
-│   │   └── 固定 MiniMax 为 utility/breadth 层
-│   ├── Phase 2
-│   │   ├── 固定 Hephaestus + 代理 5.3 为高频执行主力
-│   │   └── 固定 OAuth GPT 为裁决层
-│   ├── Phase 3
-│   │   ├── 引入 git-master 作为 Git 纪律层
-│   │   └── 收紧触发规则
-│   ├── Phase 4
-│   │   ├── 引入 passive markdown log 层
-│   │   └── 先 shadow mode 运行
-│   └── Phase 5
-│       ├── 看指标做调优
-│       ├── 调整阈值
-│       ├── 调整路由
-│       └── 必要时回滚
-│
-├── 11. 风险与边界
-│   ├── 11.1 Kimi 下沉过度
-│   │   └── 会浪费其协调优势
-│   ├── 11.2 MiniMax 上浮过高
-│   │   └── 会破坏主脑质量
-│   ├── 11.3 代理 5.3 不够稳
-│   │   └── 升到代理 5.4
-│   ├── 11.4 OAuth GPT 被滥用
-│   │   └── 必须加纪律约束
-│   ├── 11.5 passive log 层变成主流程干扰源
-│   │   └── 保持 hidden markdown-only output
-│   └── 11.6 git discipline 缺失
-│       └── 用 git-master 补上
-│
-└── 12. 最终推荐落地版
-    ├── 主聊天
-    │   └── Sisyphus + 代理 GPT-5.4
-    ├── 协调监管
-    │   └── Kimi
-    ├── utility / breadth
-    │   └── MiniMax
-    ├── 高频执行
-    │   └── Hephaestus + 代理 GPT-5.3-codex
-    ├── 高频执行升级
-    │   └── Hephaestus + 代理 GPT-5.4
-    ├── 分析 / diff / review / 裁决
-    │   └── OAuth GPT-5.4
-    ├── Git 纪律层
-    │   └── git-master
-    └── 长期状态沉淀
-        └── hidden Passive Markdown Status Log
-如果你愿意，下一步我就把这个 v2 tree 正式翻译成一份 OpenSpec change 规划结构。
+ 你当前是在 host 上运行的 `opencode` 会话。你不是 `VM103` runtime，也不是 `OpenClaw` main agent。你这轮的角色是：           
+                                                                                                                             
+  - `host-side planning surface`                                                                                             
+  - `planning-only`                                                                                                          
+  - 不做 live environment mutation                                                                                           
+  - 不假设自己已经接入 `RecallNest`                                                                                          
+                                                                                                                             
+                                                                                                                             
+  先冻结并继承这些当前 accepted facts，不要重新解释成别的东西：                                                              
+                                                                                                                             
+  1. 当前 accepted mainline 仍然是：                                                                                         
+     `host Codex -> A2A -> OpenClaw main agent -> 103 Codex`                                                                 
+                                                                                                                             
+  2. 你当前这个 `host opencode` 不是 accepted mainline 的默认 owner。                                                        
+     你只是 host 上的一个隔离 planning surface，用来帮助规划下一阶段如何更好地接入 `RecallNest` 和 `artifact` 层。           
+                                                                                                                             
+  3. 当前 `OpenCode / opencode` 在既有 OpenSpec 里有两条不同语义的路径：                                                     
+     - host-local isolated opencode path                                                                                     
+     - VM103 bounded OpenCode MVP candidate shell                                                                            
+     这两条路径不能混成一个东西。                                                                                            
+                                                                                                                             
+  4. host steady-state 方向仍然是：                                                                                          
+     - thin entry                                                                                                            
+     - planning / observation / rescue                                                                                       
+     - break-glass fallback                                                                                                  
+     而不是重新膨胀成第二个常态控制面。                                                                                      
+                                                                                                                             
+  5. `RecallNest` 的角色只能是：                                                                                             
+     - continuity recovery                                                                                                   
+     - durable recall                                                                                                        
+     - checkpoint / handoff support                                                                                          
+     它不能替代：                                                                                                            
+     - runtime config                                                                                                        
+     - rules pack                                                                                                            
+     - bounded environment brief                                                                                             
+     - raw artifact truth layer                                                                                              
+                                                                                                                             
+  6. `artifact layer` 的角色只能是：                                                                                         
+     - passive                                                                                                               
+     - classed                                                                                                               
+     - transport-governed                                                                                                    
+     - shadow-mode support outputs                                                                                           
+     它不能变成 hidden control plane。                                                                                       
+                                                                                                                             
+  7. 当前 host 提供给你的这些 continuity hints 只是背景输入，不代表你已经有 RecallNest 工具：                                
+     - `session`: `codex-opencode-v3-artifact-20260410`                                                                      
+     - `scope`: `project:document-test`                                                                                      
+     - `checkpoint reference`: `8fe10cb0`                                                                                    
+     - host 已恢复到的结论：                                                                                                 
+       - `artifact layer` 只能是 passive shadow-mode state pipeline，不是 hidden control plane                               
+       - 当前最小切片仍然是 `front-door owner + execution/research/review lanes + passive outputs limited to state-log and   
+  checkpoint`                                                                                                                
+       - `owner` 是唯一 operator-visible closure point                                                                       
+                                                                                                                             
+  8. 你不能假设你现在能直接调用 `RecallNest` 做 continuity recovery。                                                        
+     这轮任务正是要规划：                                                                                                    
+     “未来下一阶段如何让 host opencode / 相关链路更完善地接入 RecallNest 和 artifact 层”。                                   
+                                                                                                                             
+  你这轮的总目标是：                                                                                                         
+                                                                                                                             
+  在不污染当前 host Codex 和 VM103 环境、不改变当前 accepted mainline 的前提下，                                             
+  规划出一份下一阶段方案，回答：                                                                                             
+                                                                                                                             
+  - host 上的 `opencode` 应该如何更完善地接入 `RecallNest`                                                                   
+  - host 上的 `opencode` 应该如何接入 `artifact` 层而不破坏现有 artifact truth boundary                                      
+  - 它和 accepted mainline、VM103 MVP、OpenClaw、103 Codex 之间的关系应该怎么讲清楚                                          
+  - 下一阶段最小切片应该是什么                                                                                               
+  - 哪些 live checks 必须推迟到 implementation 前再验证                                                                      
+                                                                                                                             
+  你必须先阅读并吸收下面这些材料，再开始输出规划：                                                                           
+                                                                                                                             
+  1. `AGENTS.md`                                                                                                             
+  2. `openspec/changes/design-vm103-opencode-multiagent-mvp/design.md`                                                       
+  3. `openspec/changes/isolate-opencode-runtime-from-codex-workspace/design.md`                                              
+  4. `scripts/opencode/README.md`                                                                                            
+  5. `scripts/opencode/vm103-mvp/README.md`                                                                                  
+  6. `openspec/changes/plan-migrate-host-codex-control-to-openclaw-bounded-owner/design.md`                                  
+  7. `openspec/specs/artifact-access-routing-contract/spec.md`                                                               
+  8. `openspec/specs/cross-runtime-handoff-observation/spec.md`                                                              
+  9. `openspec/changes/design-a2a-runtime-owned-artifact-path-governance/design.md`                                          
+  10. `openspec/changes/design-openmemory-recall-mvp-for-codex-workflow/design.md`                                           
+  11. `openspec/changes/add-recallnest-mcp/design.md`                                                                        
+  12. `scripts/langfuse-local/codex_langfuse_wrapper.py`                                                                     
+  13. `scripts/langfuse-local/codex_openmemory_recall_mvp.py`                                                                
+                                                                                                                             
+  你必须把下面这些当前环境事实纳入规划，不要忽略：                                                                           
+                                                                                                                             
+  一、host-local `opencode` 隔离事实                                                                                         
+  - host 已经有隔离的 `opencode` 启动路径：                                                                                  
+    - `scripts/opencode/launch_isolated.sh`                                                                                  
+  - host 已经定义的默认隔离 roots：                                                                                          
+    - workspace: `/home/imax/codex-workspaces/opencode-lab`                                                                  
+    - runtime root: `/home/imax/.local/share/opencode-isolated`                                                              
+  - 当前不支持把 `opencode` 直接从 `/home/imax/codex-workspaces/document-test` 当作 routine startup path                     
+  - host 隔离方案已经有 path-level verification 记录，证明默认验证路径不会把正常启动写回共享 `document-test` workspace       
+                                                                                                                             
+  二、VM103 OpenCode MVP 事实                                                                                                
+  - VM103 MVP 是单独的 bounded candidate shell，不等于当前 host opencode                                                     
+  - 当前 VM103 MVP roots：                                                                                                   
+    - runtime root: `/opt/ai-lab/opencode-mvp`                                                                               
+    - profile root: `/opt/ai-lab/opencode-mvp/profiles/default`                                                              
+    - working repo: `/root/codex-ops/projects/document-test`                                                                 
+  - 当前 VM103 MVP 已冻结的 bounded surface：                                                                                
+    - `6` 个 agent                                                                                                           
+    - `1` 个 MCP: `serena`                                                                                                   
+    - `0` 个 plugin                                                                                                          
+    - `1` 条 bounded external executor path                                                                                  
+    - `3` 条 smoke tests                                                                                                     
+  - 当前 accepted external escalation path：                                                                                 
+    - `tool-router` -> `scripts/agentapi/run_vm103_codex_exec_with_artifacts.sh --workdir /opt/ai-lab -- <bounded task>`     
+                                                                                                                             
+  三、当前 artifact / memory boundary 事实                                                                                   
+  - 现有 host-side artifact truth path 已经存在：                                                                            
+    - `scripts/langfuse-local/codex_langfuse_wrapper.py` 写入 `.artifact-cache/`                                             
+    - 同时写 `Langfuse`                                                                                                      
+    - 包含 `trace_id` 和 `artifact_handle`                                                                                   
+  - memory MVP 的既有原则已经冻结过：                                                                                        
+    - recall layer 只做薄 recall / write-back                                                                                
+    - raw stdout/stderr/review body 不应被 memory layer 吞掉                                                                 
+    - memory 应保留回链 metadata（例如 `trace_id`、`artifact_handle`）                                                       
+  - artifact routing contract 已经规定：                                                                                     
+    - artifact 要按 class 和 transport 管理                                                                                  
+    - machine-facing 默认走 `NFS`                                                                                            
+    - human-facing 默认走 `SMB`                                                                                              
+    - continuity / durable recall 走 `RecallNest`                                                                            
+    - cross-runtime handoff 不能靠路径猜语义                                                                                 
+                                                                                                                             
+  四、你必须特别处理的关键冲突                                                                                               
+  - `openspec/changes/add-recallnest-mcp/` 这条设计看起来更像 host-local OpenCode 集成草案                                   
+  - 它写的是：                                                                                                               
+    - stdio                                                                                                                  
+    - bun                                                                                                                    
+    - cwd `~/codex-workspaces/document-test/recallnest`                                                                      
+  - 你必须判断：                                                                                                             
+    - 它是否适合当前 host-isolated `opencode` 语义                                                                           
+    - 它需要怎样改写，才能不污染当前 host isolation boundary                                                                 
+    - 它为什么不能被误当成“VM103 MVP 已可直接 apply 的方案”                                                                  
+                                                                                                                             
+  这一轮你不要做这些事：                                                                                                     
+  - 不要安装或升级 `opencode`                                                                                                
+  - 不要注册任何新 MCP                                                                                                       
+  - 不要改 host 默认全局 `~/.config/opencode` / `~/.cache/opencode` / `~/.local/share/opencode` / `~/.local/state/opencode`  
+  - 不要改 VM103 live runtime roots                                                                                          
+  - 不要重启服务                                                                                                             
+  - 不要输出 implementation commands                                                                                         
+  - 不要假设 `opencode` 现在已经有 RecallNest MCP                                                                            
+  - 不要把 planning 写成 implementation                                                                                      
+  - 不要把 `opencode` 规划成新的默认 owner                                                                                   
+  - 不要把 `RecallNest` 规划成隐藏调度器                                                                                     
+  - 不要把 `artifact` 规划成隐藏控制面                                                                                       
+                                                                                                                             
+  你要回答的核心问题是：                                                                                                     
+                                                                                                                             
+  1. 从 host-local `opencode` 视角看，下一阶段最小接入 `RecallNest` 的正确切片是什么？                                       
+  2. 从 host-local `opencode` 视角看，下一阶段接入 `artifact` 层时，怎样才能继续复用现有 `.artifact-cache + Langfuse +       
+  artifact_handle` 边界，而不是重造一套 artifact owner？                                                                     
+  3. host-local `opencode` 应该如何与 accepted mainline 协作，而不是与其竞争？                                               
+  4. 当前应该优先规划哪一类方案：                                                                                            
+     - 方案 A：host-local isolated `opencode` 直接接 `RecallNest MCP`                                                        
+     - 方案 B：先做 `artifact envelope + checkpoint / handoff contract`，暂不直接给 `opencode` 新 MCP                        
+     - 方案 C：先做 `checkpoint-only / resume-hint-only` 的极小切片                                                          
+  5. 哪一个是现在最稳、最小、最符合 accepted mainline 的下一阶段切片？                                                       
+                                                                                                                             
+  请严格按下面结构输出。不要省略标题，不要换顺序。                                                                           
+                                                                                                                             
+  第一部分：`Mainline-first summary`                                                                                         
+  要求：                                                                                                                     
+  - 先一句话说明 accepted current mainline                                                                                   
+  - 再一句话说明 host-local `opencode` 的正确位置                                                                            
+  - 再一句话说明这轮 phase 的目标边界                                                                                        
+  - 这里必须先讲主线，再讲 `opencode`                                                                                        
+                                                                                                                             
+  第二部分：`Host operator-facing full chain`                                                                                
+  你必须从 host 操作者视角写完整动作链，不能只写抽象原则。                                                                   
+                                                                                                                             
+  至少写两条链：                                                                                                             
+                                                                                                                             
+  A. `当前 host opencode planning chain`                                                                                     
+  说明：                                                                                                                     
+  - host 上的操作者现在怎么用隔离 `opencode` 做 planning                                                                     
+  - 它如何读取 repo / OpenSpec / scripts                                                                                     
+  - 它为什么不能被误当成 accepted live runtime owner                                                                         
+  - 它和 accepted mainline 如何共存而不打架                                                                                  
+                                                                                                                             
+  B. `未来下一阶段接入后的 planning-support chain`                                                                           
+  说明未来如果下一阶段接入 `RecallNest` 和 `artifact` support`，操作者链路会是什么样                                         
+  要求明确写出：                                                                                                             
+  - host 先做什么                                                                                                            
+  - host-local isolated `opencode` 接收什么输入                                                                              
+  - `RecallNest` 如果参与，会位于哪里                                                                                        
+  - `artifact` 如果参与，会位于哪里                                                                                          
+  - 哪些输出是 support-only                                                                                                  
+  - 哪些输出仍然必须通过 accepted mainline 才能成为真实执行闭环                                                              
+  - 最终哪个 owner 对操作者形成 closure                                                                                      
+                                                                                                                             
+  第三部分：`Accepted facts vs inference`                                                                                    
+  你必须把结论分成两组：                                                                                                     
+  - `已从当前 OpenSpec / scripts 明确读到的事实`                                                                             
+  - `基于这些事实作出的推断`                                                                                                 
+  要求至少各列 8 条。                                                                                                        
+  不要混在一起。                                                                                                             
+                                                                                                                             
+  第四部分：`Not this, but this`                                                                                             
+  至少列出 10 条误解纠正。                                                                                                   
+  必须覆盖：                                                                                                                 
+  - 不是让 host-local `opencode` 现在先去调用 RecallNest 恢复 continuity，而是把 host 提供的 continuity hints 当背景输入     
+  - 不是让 host-local `opencode` 接管 accepted mainline，而是作为 bounded planning surface                                   
+  - 不是让 `RecallNest` 代替 config / rules / checkpoint / environment brief                                                 
+  - 不是让 `artifact` 代替 control plane                                                                                     
+  - 不是让跨 runtime 裸绝对路径继续裸传                                                                                      
+  - 不是让 host-local path 被误读成 VM103/OpenClaw 可直接读取                                                                
+  - 不是把 `add-recallnest-mcp` 原样直接 apply                                                                               
+  - 不是让 host isolation boundary 被静默扩大                                                                                
+  - 不是用 gateway liveness 代替 readiness gate                                                                              
+  - 不是因为接了 memory 就可以省略 environment brief / checkpoint / rules                                                    
+                                                                                                                             
+  第五部分：`Integration options for host opencode`                                                                          
+  请比较这 3 个方案：                                                                                                        
+                                                                                                                             
+  方案 A：`host-local isolated opencode + direct RecallNest MCP`                                                             
+  你必须写清楚：                                                                                                             
+  - 它到底意味着什么                                                                                                         
+  - 它会碰哪些 host-local surfaces                                                                                           
+  - 它是否会影响 host isolation guarantees                                                                                   
+  - 它如何避免污染 `document-test` workspace 和默认 global opencode roots                                                    
+  - 它和 accepted mainline 的关系是什么                                                                                      
+  - 它的优点 / 风险 / rollback boundary 是什么                                                                               
+                                                                                                                             
+  方案 B：`host opencode first uses artifact envelope + checkpoint / handoff contract, no direct RecallNest MCP yet`         
+  你必须写清楚：                                                                                                             
+  - 它到底意味着什么                                                                                                         
+  - 它如何先获得 continuity-like usefulness                                                                                  
+  - 为什么它更保守                                                                                                           
+  - 它对 host / VM103 环境的干扰是否最小                                                                                     
+  - 它的优点 / 风险 / rollback boundary 是什么                                                                               
+                                                                                                                             
+  方案 C：`host opencode checkpoint-hint-only minimal slice`                                                                 
+  你必须写清楚：                                                                                                             
+  - 它到底意味着什么                                                                                                         
+  - 是否可以先不加任何新的 MCP，只规划 prompt contract / checkpoint hints / artifact references                              
+  - 它的收益 / 局限 / rollback boundary 是什么                                                                               
+                                                                                                                             
+  每个方案都必须统一写：                                                                                                     
+  - `scope`                                                                                                                  
+  - `prerequisites`                                                                                                          
+  - `host environment impact`                                                                                                
+  - `VM103 impact`                                                                                                           
+  - `artifact impact`                                                                                                        
+  - `RecallNest impact`                                                                                                      
+  - `mainline compatibility`                                                                                                 
+  - `main risks`                                                                                                             
+  - `rollback boundary`                                                                                                      
+                                                                                                                             
+  第六部分：`Recommended next slice`                                                                                         
+  只能推荐一个最小切片，不要给模糊答案。                                                                                     
+  这个推荐切片必须同时满足：                                                                                                 
+  - 不破坏当前 accepted mainline                                                                                             
+  - 对 host 环境干扰最小                                                                                                     
+  - 对 VM103 环境干扰最小                                                                                                    
+  - 不要求 `opencode` 立刻变成 runtime owner                                                                                 
+  - 不要求 `RecallNest` 一次性全量塞进来                                                                                     
+  - 不要求 `artifact` 承担控制面职责                                                                                         
+                                                                                                                             
+  你推荐的切片必须写清楚：                                                                                                   
+  - `phase goal`                                                                                                             
+  - `why this slice now`                                                                                                     
+  - `task breakdown`                                                                                                         
+  - `RecallNest contract`                                                                                                    
+  - `artifact contract`                                                                                                      
+  - `validation gates`                                                                                                       
+  - `non-interference checks`                                                                                                
+  - `rollback boundary`                                                                                                      
+  - `explicitly out of scope`                                                                                                
+                                                                                                                             
+  其中 `RecallNest contract` 和 `artifact contract` 都必须用统一格式写：                                                     
+  - `trigger / input`                                                                                                        
+  - `action`                                                                                                                 
+  - `output`                                                                                                                 
+  - `next consumer`                                                                                                          
+  - `authority owner`                                                                                                        
+  - `failure boundary`                                                                                                       
+                                                                                                                             
+  第七部分：`Artifact and path governance`                                                                                   
+  你必须单独展开跨 runtime artifact path 的治理，不要只带过。                                                                
+  至少写清楚：                                                                                                               
+  - 为什么裸绝对路径不够                                                                                                     
+  - 为什么必须引入 envelope                                                                                                  
+  - 最小 envelope 字段至少包括：                                                                                             
+    - `runtimeOwner`                                                                                                         
+    - `absolutePath`                                                                                                         
+    - `pathClass`                                                                                                            
+    - `hostReadable`                                                                                                         
+    - `recommendedAccess`                                                                                                    
+    - `bridgeRequired`                                                                                                       
+  - `pathClass` 至少区分：                                                                                                   
+    - `host-direct`                                                                                                          
+    - `remote-direct`                                                                                                        
+    - `bridge-needed`                                                                                                        
+  - 还要明确：                                                                                                               
+    - host-local `opencode` 看到 artifact path 时，哪些场景只是 reference，哪些场景可以继续消费，哪些场景必须先 bridge       
+  - operator-facing answer order 必须固定为：                                                                                
+    1. 属于哪个 runtime                                                                                                      
+    2. 当前能不能直接读                                                                                                      
+    3. 路径是什么                                                                                                            
+    4. 推荐访问方式是什么                                                                                                    
+    5. 如果不能直接读，下一步 bridge 动作是什么                                                                              
+                                                                                                                             
+  第八部分：`Blocked live checks for later implementation`                                                                   
+  列出如果以后从 planning 进入 implementation 前，必须 live verify 的项目。                                                  
+  只列清单，不要实际执行。                                                                                                   
+  至少覆盖：                                                                                                                 
+  - host isolated `opencode` 当前实际 runtime-state writable surface                                                         
+  - host-local `RecallNest` 可用入口与依赖条件                                                                               
+  - `bun` / MCP runtime readiness                                                                                            
+  - `add-recallnest-mcp` 是否需要重写成 host-isolated variant                                                                
+  - `.artifact-cache + Langfuse + artifact_handle` 在 host-local `opencode` planning-support chain 中的最小接入方式          
+  - cross-runtime artifact envelope 应由哪一层 first-own                                                                     
+  - host `opencode` 产生的 support outputs 如何不被误当成 accepted mainline completion                                       
+                                                                                                                             
+  最后一部分：`Final recommendation`                                                                                         
+  用中文给一个简洁收口：                                                                                                     
+  - 当前你推荐的下一阶段切片是什么                                                                                           
+  - 为什么它比另外两种更适合现在                                                                                             
+  - 这一步完成后，下一步再看什么                                                                                             
+                                                                                                                             
+  输出硬约束：                                                                                                               
+  - 先 mainline，再 host-local `opencode`                                                                                    
+  - 先 operator-facing chain，再系统分层                                                                                     
+  - 明确区分事实与推断                                                                                                       
+  - 不要输出泛泛建议                                                                                                         
+  - 不要输出 implementation commands                                                                                         
+  - 不要假设 `opencode` 已接好 RecallNest                                                                                    
+  - 不要把 host-local planning surface 写成 accepted live runtime owner                                                      
+                                                                                                                             
