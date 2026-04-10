@@ -9,7 +9,18 @@
       "status": "in-progress",
       "startedAt": "2026-04-10T17:48:08.474Z",
       "commits": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "timestamp": "2026-04-10T17:55:59.999Z",
+          "status": "passed",
+          "issues": []
+        },
+        {
+          "timestamp": "2026-04-10T17:56:44.648Z",
+          "status": "passed",
+          "issues": []
+        }
+      ],
       "blockers": []
     }
   ],
@@ -17,7 +28,7 @@
   "pendingReviews": [],
   "metrics": {
     "totalCommits": 0,
-    "totalReviews": 0,
+    "totalReviews": 2,
     "issuesFound": 0,
     "issuesFixed": 0
   }
