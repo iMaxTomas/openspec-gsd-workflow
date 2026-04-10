@@ -1,6 +1,6 @@
 {
   "project": "opencode-lab",
-  "currentIteration": "2-validation-gates",
+  "currentIteration": "3",
   "iterations": [
     {
       "id": "1-context-monitor",
@@ -39,6 +39,16 @@
           ]
         }
       ],
+      "blockers": []
+    },
+    {
+      "id": "3",
+      "branch": "iteration/3",
+      "goal": "Implement /gsd-pause-work and /gsd-resume-work commands, add worktree health checks, and CI/CD integration",
+      "status": "in-progress",
+      "startedAt": "2026-04-10T18:29:26.878Z",
+      "commits": [],
+      "reviews": [],
       "blockers": []
     }
   ],
