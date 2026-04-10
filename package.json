@@ -1,6 +1,6 @@
 {
   "name": "openspec-gsd-workflow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "AI-assisted development workflow with automatic context management, spec-driven development, and git worktree isolation",
   "main": "index.js",
   "type": "module",
@@ -9,7 +9,14 @@
     "test:integration": "node tests/integration.test.mjs",
     "lint": "shellcheck scripts/*.sh git-agent.sh",
     "validate": "node scripts/validate-config.mjs",
-    "setup": "node scripts/setup.mjs"
+    "setup": "node scripts/setup.mjs",
+    "ml:analyze": "node .opencode/scripts/ml-suggestions.mjs analyze",
+    "ml:worktree": "node .opencode/scripts/ml-suggestions.mjs worktree",
+    "predict": "node .opencode/scripts/predictive-context.mjs predict",
+    "plan": "node .opencode/scripts/predictive-context.mjs plan",
+    "perf:analyze": "node .opencode/scripts/performance-optimizer.mjs analyze",
+    "perf:profile": "node .opencode/scripts/performance-optimizer.mjs profile",
+    "perf:report": "node .opencode/scripts/performance-optimizer.mjs report"
   },
   "keywords": [
     "ai-assisted-development",
