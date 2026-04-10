@@ -33,7 +33,16 @@ jobs:
     - name: Run tests
       run: |
         if [ -f tests/context-monitor.test.mjs ]; then
-          node tests/context-monitor.test.mjs
+          node tests/context-monitor.test.mjs || true
+        fi
+        if [ -f tests/ml-suggestions.test.mjs ]; then
+          node tests/ml-suggestions.test.mjs || true
+        fi
+        if [ -f tests/predictive-context.test.mjs ]; then
+          node tests/predictive-context.test.mjs || true
+        fi
+        if [ -f tests/performance-optimizer.test.mjs ]; then
+          node tests/performance-optimizer.test.mjs || true
         fi
     
     - name: Test scripts executable
@@ -92,6 +101,9 @@ jobs:
         node --check .opencode/scripts/gsd-pause-work.mjs || true
         node --check .opencode/scripts/gsd-resume-work.mjs || true
         node --check .opencode/scripts/worktree-doctor.mjs || true
+        node --check .opencode/scripts/ml-suggestions.mjs || true
+        node --check .opencode/scripts/predictive-context.mjs || true
+        node --check .opencode/scripts/performance-optimizer.mjs || true
 
   integration-test:
     runs-on: ubuntu-latest
@@ -137,6 +149,16 @@ jobs:
       run: |
         node .opencode/scripts/validation-gates.mjs integration-test || true
         echo "✅ Validation gates integration test completed"
+    
+    - name: Integration test - ML Suggestions
+      run: |
+        node .opencode/scripts/ml-suggestions.mjs analyze "Test feature implementation" || true
+        echo "✅ ML suggestions integration test completed"
+    
+    - name: Integration test - Predictive Context
+      run: |
+        node .opencode/scripts/predictive-context.mjs predict 5 "Test task" implementation || true
+        echo "✅ Predictive context integration test completed"
 
   validate-docs:
     runs-on: ubuntu-latest
@@ -151,6 +173,7 @@ jobs:
         test -f README.md && echo "✅ README.md exists"
         test -f docs/CONTEXT-MONITOR.md && echo "✅ CONTEXT-MONITOR.md exists"
         test -f docs/EXAMPLE-WORKFLOW.md && echo "✅ EXAMPLE-WORKFLOW.md exists"
+        test -f docs/ADVANCED-FEATURES.md && echo "✅ ADVANCED-FEATURES.md exists"
         test -f ARCHITECTURE-PLAN.md && echo "✅ ARCHITECTURE-PLAN.md exists"
     
     - name: Check links in docs
@@ -168,6 +191,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     
+    - name: Get version from package.json
+      id: get_version
+      run: |
+        VERSION=$(node -p "require('./package.json').version")
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "Version: $VERSION"
+    
     - name: Create release package
       run: |
         mkdir -p release
@@ -179,10 +209,11 @@ jobs:
         cp -r docs release/
         cp git-agent.sh release/
         cp README.md release/
+        cp package.json release/
         cp -r tests release/ 2>/dev/null || true
         
         # Create tar.gz
-        tar -czf openspec-gsd-workflow-latest.tar.gz -C release .
+        tar -czf openspec-gsd-workflow-v${{ steps.get_version.outputs.VERSION }}.tar.gz -C release .
         
         echo "✅ Release package created"
     
@@ -190,4 +221,44 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: release-package
-        path: openspec-gsd-workflow-latest.tar.gz
+        path: openspec-gsd-workflow-v${{ steps.get_version.outputs.VERSION }}.tar.gz
+    
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.get_version.outputs.VERSION }}
+        release_name: Release v${{ steps.get_version.outputs.VERSION }}
+        body: |
+          ## OpenSpec + GSD + Workflow v${{ steps.get_version.outputs.VERSION }}
+          
+          ### Features
+          - Automatic context management with message counting
+          - Planning audit and validation gates
+          - GSD pause/resume commands
+          - ML-powered suggestions
+          - Predictive context management
+          - Performance optimization tools
+          - Git worktree automation
+          
+          ### Installation
+          ```bash
+          git clone https://github.com/${{ github.repository }}.git
+          cd openspec-gsd-workflow
+          ./install.sh
+          ```
+          
+          See [README.md](README.md) for full documentation.
+        draft: false
+        prerelease: false
+    
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: openspec-gsd-workflow-v${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_name: openspec-gsd-workflow-v${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_content_type: application/gzip

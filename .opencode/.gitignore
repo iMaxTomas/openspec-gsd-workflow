@@ -1,0 +1,10 @@
+node_modules
+package.json
+package-lock.json
+bun.lock
+.gitignore
+passive/*.json
+ml-data/
+predictive-data/
+cache/
+performance-metrics.json

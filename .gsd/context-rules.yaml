@@ -1,0 +1,70 @@
+# GSD Context Management Rules
+# Reference: Claude Code 80/20 Rule + GSD 2 Auto Checkpoint
+
+thresholds:
+  # Message count thresholds (based on community best practices)
+  green:
+    range: [0, 10]
+    status: "healthy"
+    action: "work_freely"
+    
+  yellow:
+    range: [10, 12]
+    status: "attention"
+    action: "prepare_handoff"
+    
+  red:
+    range: [12, 15]
+    status: "critical"
+    action: "create_checkpoint"
+
+actions:
+  green:
+    - type: "info"
+      message: "Context healthy. Work freely."
+      
+  yellow:
+    - type: "warning"
+      message: "Context at 10 messages. Prepare for handoff."
+      suggestions:
+        - "/compact - Summarize conversation"
+        - "/gsd-pause-work - Create checkpoint"
+        - "Complete current subtask"
+        
+  red:
+    - type: "enforce"
+      message: "Context limit reached (15 messages). Creating checkpoint..."
+      auto_execute:
+        - command: "/gsd-pause-work"
+          description: "Create checkpoint"
+        - command: "create-session-worktree"
+          description: "Create new worktree for continuation"
+
+worktree_strategy:
+  main_worktree:
+    path: "${HOME}/project"
+    purpose: "spec_definitions"
+    
+  change_worktree:
+    path: "${HOME}/gsd-workspaces/${project}/${change-id}"
+    purpose: "isolated_development"
+    
+  session_worktree:
+    path: "${HOME}/gsd-workspaces/${project}/${change-id}-session-${timestamp}"
+    purpose: "context_reset"
+
+monitoring:
+  enabled: true
+  check_interval: "every_message"
+  auto_compact: false
+  
+handoff_template:
+  required_sections:
+    - timestamp
+    - source_session
+    - target_session
+    - completed_work
+    - remaining_work
+    - decisions_made
+    - blockers
+    - next_action

@@ -1,0 +1,62 @@
+# Validation Gates Configuration
+# Three-layer validation system
+
+gates:
+  advisory:
+    action: "report_only"
+    description: "Style conventions, best practices"
+    examples:
+      - "Code formatting"
+      - "Naming conventions"
+      - "Documentation suggestions"
+    
+  soft_fail:
+    action: "warning_overridable"
+    description: "Task size, evidence quality"
+    examples:
+      - "Task > 2 hours"
+      - "Missing test coverage"
+      - "Incomplete documentation"
+    override: true
+    
+  hard_fail:
+    action: "block"
+    description: "Missing specs, failing tests, security issues"
+    examples:
+      - "No proposal document"
+      - "Tests failing"
+      - "Security vulnerability"
+      - "Breaking change without migration"
+    override: false
+
+rules:
+  proposal_required:
+    gate: "hard_fail"
+    check: "file_exists"
+    path: "openspec-ob/active/changes/{change-id}/proposal.md"
+    message: "Proposal document is required"
+    
+  design_frozen:
+    gate: "hard_fail"
+    check: "file_exists"
+    path: "openspec-ob/active/changes/{change-id}/design.md"
+    message: "Design decisions must be frozen"
+    
+  task_size:
+    gate: "soft_fail"
+    check: "task_duration"
+    max_hours: 2
+    message: "Tasks should be < 2 hours"
+    
+  test_coverage:
+    gate: "soft_fail"
+    check: "file_pattern"
+    pattern: "**/*.test.{js,mjs,ts}"
+    min_files: 1
+    message: "Tests recommended for new features"
+    
+  code_style:
+    gate: "advisory"
+    check: "lint"
+    tools: ["eslint", "prettier"]
+    message: "Code style suggestions"
