@@ -1,5 +1,7 @@
 # OpenSpec + GSD + Workflow
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 [![Version](https://img.shields.io/badge/version-v0.3.0--advanced-blue)](https://github.com/iMaxTomas/openspec-gsd-workflow/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -215,6 +217,8 @@ This project implements a **three-layer architecture**:
 - [Implementation Roadmap](IMPLEMENTATION-PLAN.md)
 - [Context Monitor Guide](docs/CONTEXT-MONITOR.md)
 - [Example Workflow](docs/EXAMPLE-WORKFLOW.md)
+- [AI Dialogue Modes Canvas (EN)](docs/AI-DIALOGUE-MODES-CANVAS.md)
+- [AI 对话使用方式白板 (ZH-CN)](docs/AI-DIALOGUE-MODES-CANVAS.zh-CN.md)
 - [Final Summary](FINAL-SUMMARY.md)
 
 ## 🎯 Use Cases
