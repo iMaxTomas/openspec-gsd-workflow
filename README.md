@@ -42,16 +42,10 @@ Ensure quality from the start with comprehensive planning checks:
 - ✅ Spec coverage
 - ✅ Task decomposition (< 2 hours)
 - ✅ Evidence planning
-- ✅ Strategy-card governance for large-output commands
 
 ```bash
 node .opencode/scripts/planning-audit.mjs my-change
 ```
-
-For large-output and evidence-heavy tasks, strategy cards now act as the
-task-start contract: they record the execution path, output owner, artifact
-path, sidecar decision, bounded main-context summary, second-search boundary,
-and stop line. See [Strategy Card Governance Upgrade](docs/STRATEGY-CARD-GOVERNANCE-UPGRADE.md).
 
 ### 🛡️ Three-Layer Validation Gates
 
