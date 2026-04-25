@@ -42,10 +42,16 @@ node .opencode/scripts/context-monitor.mjs simulate
 - ✅ Spec 覆盖率
 - ✅ Task 拆分合理（< 2 小时）
 - ✅ Evidence 规划
+- ✅ 面向大输出命令的战略卡治理
 
 ```bash
 node .opencode/scripts/planning-audit.mjs my-change
 ```
+
+对大输出和证据重任务，战略卡现在是开工合同：先记录执行路径、
+输出负责人、artifact 路径、sidecar 决策、主上下文摘要边界、
+二次搜索边界和 stop line。详见
+[Strategy Card Governance Upgrade](docs/STRATEGY-CARD-GOVERNANCE-UPGRADE.md)。
 
 ### 🛡️ 三层验证门
 
